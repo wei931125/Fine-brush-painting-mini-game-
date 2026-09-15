@@ -1,0 +1,389 @@
+/* 【視覺與色彩設計規範】 */
+:root {
+    --bg-color: #F4EBD9;
+    --text-color: #2c1e16;
+    --border-color: #D5C7B5;
+    --primary-color: #B23A2E; 
+    --primary-hover: #8B2C22;
+    --secondary-color: #4A6054;
+    --error-color: #7A7671;
+    --btn-dark-green: #354E41;
+    --btn-dark-green-hover: #26382F;
+}
+
+body {
+    background-color: #dfcfb9;
+    color: var(--text-color);
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", "TW-Kai", "STKaiti", serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: 177.78vh; 
+    max-height: 56.25vw; 
+    background-color: var(--bg-color);
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(100, 80, 60, 0.4); 
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.screen.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+#s1-image { display: block !important; }
+
+/* --- 序列動畫腳本設定 --- */
+@keyframes fadeInUpStay {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(15px); }
+    10% { opacity: 1; transform: translateY(0); }   
+    90% { opacity: 1; transform: translateY(0); }   
+    100% { opacity: 0; transform: translateY(-15px); } 
+}
+
+.intro-text-container {
+    position: relative;
+    height: 125px; 
+    margin-top: 15px; 
+}
+
+.title-fade-in {
+    opacity: 0;
+    animation: fadeInUpStay 1.2s ease forwards;
+    animation-delay: 0.1s;
+}
+
+.fade-step-1 {
+    position: absolute;
+    width: 100%;
+    top: 25px; 
+    left: 0;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInOut 6s ease forwards; 
+    animation-delay: 0.8s;
+}
+
+.fade-step-2 {
+    position: absolute;
+    width: 100%;
+    top: 50px; 
+    left: 0;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInUpStay 1.2s ease forwards;
+    animation-delay: 7s; 
+}
+
+.fade-step-3 {
+    opacity: 0;
+    animation: fadeInUpStay 1.2s ease forwards;
+    animation-delay: 8.5s; 
+}
+
+/* --- 面板與文字設定 --- */
+.glass-panel {
+    position: relative;
+    z-index: 1;
+    background: rgba(244, 235, 217, 0.25); 
+    backdrop-filter: blur(2px); 
+    -webkit-backdrop-filter: blur(2px);
+    /* ✅ 將雙層古風邊框統一加到所有的半透明面板上 */
+    border: 2px solid rgba(139, 115, 85, 0.5);
+    outline: 1px solid rgba(139, 115, 85, 0.3);
+    outline-offset: -6px; 
+    border-radius: 4px; 
+    padding: 30px 40px;
+    width: 75%;
+    max-height: 85%;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.small-window {
+    width: fit-content;
+    min-width: 480px;
+    max-width: 650px;
+    padding: 35px 55px;
+    background: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(1px); 
+    -webkit-backdrop-filter: blur(1px);
+    text-align: center;
+}
+
+.ancient-title {
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
+    font-size: 2.5rem;
+    color: #2c1e16;
+    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.6);
+    padding-bottom: 15px;
+    margin-bottom: 15px; 
+    letter-spacing: 8px;
+    line-height: 1.4;
+}
+
+.ancient-text {
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
+    color: #2c1e16;
+    font-size: 1.25rem;
+    line-height: 2.2;
+    font-weight: 600;
+    text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.8), 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.highlight-title {
+    color: var(--primary-color);
+    font-size: 1.35rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* --- 高質感無金邊橢圓按鈕 --- */
+.start-btn-premium {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #8B2C22, #B23A2E);
+    border: none;
+    color: #FDF5E6;
+    padding: 14px 45px;
+    font-size: 1.6rem;
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
+    font-weight: bold;
+    letter-spacing: 8px;
+    text-indent: 8px; 
+    border-radius: 50px; 
+    cursor: pointer;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.4), 
+        inset 0 0 10px rgba(0, 0, 0, 0.2); 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    transition: all 0.4s ease;
+}
+
+.start-btn-premium:hover {
+    background: linear-gradient(135deg, #A03126, #C84234);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.5),
+        inset 0 0 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+h1, h2, h3 { text-align: center; font-weight: bold; }
+h2 { font-size: 2.2rem; margin-top: 20px; margin-bottom: 30px; letter-spacing: 4px; color: var(--text-color); }
+
+#score-board {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    display: none;
+    z-index: 100;
+    background: rgba(244, 235, 217, 0.8);
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.story-text { line-height: 2.2; font-size: 1.15rem; margin-bottom: 25px; text-align: justify; }
+
+.question-text { 
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
+    font-size: 1.25rem; 
+    color: var(--primary-color); 
+    margin-bottom: 25px; 
+    padding: 0; 
+    background: transparent; 
+    border: none; 
+    line-height: 1.8; 
+    font-weight: bold; 
+    box-shadow: none; 
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.8), 0px 0px 8px rgba(139, 115, 85, 0.9);
+}
+
+#s2-hint {
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
+    font-size: 1.3rem; 
+    color: #8A2218; 
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.8;
+    text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.95), 1px 1px 2px rgba(0, 0, 0, 0.3); 
+}
+
+/* 仿舊紙籤回饋底色 */
+#s2-result-msg {
+    text-align: center;
+    margin: 15px auto 0 auto; 
+    font-weight: bold;
+    min-height: 25px; 
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
+    font-size: 1.35rem; 
+    width: fit-content; 
+    transition: all 0.3s ease;
+}
+
+#s2-result-msg:not(:empty) {
+    background-color: rgba(244, 235, 217, 0.95); 
+    border: 1px solid rgba(139, 115, 85, 0.6); 
+    padding: 6px 25px; 
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+}
+
+#s2-result-msg[style*="color: var(--secondary-color)"] {
+    color: #1a4a2e !important; 
+    text-shadow: none !important; 
+}
+
+#s2-result-msg[style*="color: var(--error-color)"] {
+    color: #4a4a4a !important; 
+    text-shadow: none !important; 
+}
+
+button:not(.start-btn-premium):not(.dev-btn) {
+    background-color: var(--primary-color);
+    color: white;
+    font-family: inherit;
+    border: none;
+    padding: 12px 40px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(178, 58, 46, 0.3); 
+    letter-spacing: 2px;
+    margin-top: 25px;
+}
+button:not(.start-btn-premium):not(.dev-btn):hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+.hidden-btn { display: none; }
+
+.option-btn { background-color: var(--btn-dark-green); color: #F4EBD9; border: 1px solid var(--btn-dark-green-hover); padding: 16px 25px; font-size: 1.2rem; border-radius: 4px; margin: 15px 0; width: 100%; text-align: left; box-shadow: 0 4px 10px rgba(53, 78, 65, 0.2); line-height: 1.6; }
+.option-btn:hover { background-color: var(--btn-dark-green-hover); transform: translateY(-2px); }
+
+.s3-btn { width: 80%; max-width: 300px; margin: 5px 0; background-color: var(--secondary-color) !important; border-radius: 4px !important; padding: 12px 20px !important; }
+.s3-btn:hover { background-color: #384A41 !important; }
+
+.draggable-item { 
+    background-color: var(--secondary-color); 
+    color: #FDF5E6; 
+    padding: 12px 20px; 
+    border-radius: 4px; 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    cursor: grab; 
+    user-select: none; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+    transition: all 0.2s ease; 
+    font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+.draggable-item:hover { 
+    background-color: var(--btn-dark-green); 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+.draggable-item:active { cursor: grabbing; transform: scale(0.95); }
+
+.drop-zone { width: 100%; height: 120px; border: 2px dashed rgba(139, 115, 85, 0.8); border-radius: 8px; display: flex; justify-content: center; align-items: center; background-color: rgba(244, 235, 217, 0.4); color: #4a3322; font-family: "DFKai-SB", "BiauKai", "Kaiti", serif; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 4px rgba(255,255,255,0.8); transition: all 0.3s ease; box-shadow: inset 0 0 15px rgba(139, 115, 85, 0.1); }
+.drop-zone.dragover { background-color: rgba(244, 235, 217, 0.7); border-color: var(--primary-color); transform: scale(1.02); box-shadow: inset 0 0 20px rgba(139, 115, 85, 0.3); }
+
+.s3-canvas { 
+    width: 100%; 
+    border: 2px solid rgba(139, 115, 85, 0.4); 
+    background-color: #fffaf0; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 1.2rem; 
+    color: var(--text-color); 
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05); 
+    height: 350px; 
+    position: relative; 
+    overflow: hidden; 
+    border-radius: 4px; 
+}
+
+#music-control-container { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 0; background-color: rgba(244, 235, 217, 0.8); padding: 5px; border-radius: 50px; border: 1px solid rgba(139, 115, 85, 0.4); z-index: 100; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+#music-control-container:hover { background-color: rgba(244, 235, 217, 0.95); padding: 5px 15px 5px 5px; gap: 10px; }
+#music-toggle { font-size: 1.5rem; cursor: pointer; background: none; border: none; padding: 5px; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; color: var(--primary-color); margin-top: 0; flex-shrink: 0; transition: background-color 0.3s; }
+#music-toggle:hover { background-color: rgba(178, 58, 46, 0.1); }
+#volume-slider { width: 0; opacity: 0; cursor: pointer; accent-color: var(--primary-color); transition: all 0.4s; margin: 0; }
+#music-control-container:hover #volume-slider { width: 80px; opacity: 1; }
+
+#video-guide-btn { position: absolute; top: 85px; left: 20px; background-color: rgba(244, 235, 217, 0.8); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 50px; padding: 8px 16px; color: var(--text-color); font-size: 1rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 100; transition: all 0.3s ease; }
+#video-guide-btn:hover { background-color: rgba(244, 235, 217, 1); color: var(--primary-color); transform: translateY(-2px); }
+
+/* 開發者測試捷徑樣式 */
+#dev-shortcuts {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(30, 30, 30, 0.85);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    z-index: 9999;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+.dev-btn {
+    background-color: #444;
+    color: white;
+    border: 1px solid #666;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+.dev-btn:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-hover);
+}
