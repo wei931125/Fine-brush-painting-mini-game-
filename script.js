@@ -321,7 +321,6 @@ function loadStage1Question() {
     }
 
     const data = stage1Data[currentQuestionIndex];
-    
     const imgElement = document.getElementById('s1-image');
     const artContainer = document.getElementById('s1-art-container');
     
@@ -336,7 +335,7 @@ function loadStage1Question() {
     document.getElementById('s1-question').innerText = data.question;
     
     const optionsContainer = document.getElementById('s1-options');
-    optionsContainer.innerHTML = '';
+    optionsContainer.innerHTML = ''; 
     
     let shuffledOptions = [...data.options];
     for (let i = shuffledOptions.length - 1; i > 0; i--) {
@@ -375,7 +374,6 @@ function handleStage1Answer(isCorrect) {
 }
 
 function checkStage1Result() {
-    // 結算時隱藏左側畫框，讓解析卷完整呈現
     const artContainer = document.getElementById('s1-art-container');
     if (artContainer) artContainer.style.display = 'none';
 
@@ -389,7 +387,7 @@ function checkStage1Result() {
     reviewDiv.style.textAlign = 'left';
     reviewDiv.style.marginTop = '20px';
     reviewDiv.style.padding = '18px';
-    reviewDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'; 
+    reviewDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'; 
     reviewDiv.style.border = '1px solid var(--border-color)';
     reviewDiv.style.borderRadius = '8px';
     reviewDiv.style.maxHeight = '320px';
@@ -419,8 +417,8 @@ function checkStage1Result() {
     reviewDiv.innerHTML = reviewHTML;
     optionsContainer.appendChild(reviewDiv);
 
-    if (stage1Score < 20) {
-        alert('分數低於 20 分，請閱讀解析後重新測驗！');
+    if (stage1Score < 30) {
+        alert('分數低於 30 分，未達通關標準，請閱讀解析後重新測驗！');
         
         const retryBtn = document.createElement('button');
         retryBtn.innerText = '重新測驗';
@@ -455,7 +453,7 @@ function initStage2() {
 }
 
 function updateS2Info() {
-    document.getElementById('s2-info').innerText = `畫師的需求不斷傳來，請將正確的工具拖曳至案頭上。(目前此關得分：${stage2Score} 分)`;
+    document.getElementById('s2-info').innerHTML = `畫師的需求不斷傳來，請將正確的工具拖曳至案頭上。<br><span style="display: inline-block; margin-top: 6px; color: var(--primary-color); font-weight: bold;">（目前此關得分：${stage2Score} 分）</span>`;
 }
 
 function loadStage2Question() {
@@ -568,6 +566,8 @@ function initStage3() {
     s3Awarded = {}; 
     document.getElementById('btn-finish').style.display = 'none';
     
+    const imageWrapper = document.getElementById('s3-image-wrapper');
+    if (imageWrapper) imageWrapper.style.display = 'none';
     document.getElementById('s3-canvas-layer').style.backgroundColor = 'transparent';
     loadS3Step(s3Step);
 }
@@ -576,16 +576,19 @@ function loadS3Step(stepNum) {
     s3Step = stepNum;
     const data = stage3Data.find(d => d.step === stepNum);
     
-    document.getElementById('s3-story').innerHTML = `<strong style="color:var(--primary-color)">${data.title}</strong><br>${data.desc}`;
+    document.getElementById('s3-story').innerHTML = `<strong style="color:var(--primary-color); font-size: 1.25rem;">${data.title}</strong><br><span style="display:inline-block; margin-top: 8px;">${data.desc}</span>`;
     
     const imgElement = document.getElementById('s3-image');
     const canvasText = document.getElementById('s3-canvas-text');
+    const imageWrapper = document.getElementById('s3-image-wrapper');
     
     if (data.image) {
         imgElement.src = data.image;
+        if (imageWrapper) imageWrapper.style.display = 'inline-block';
         imgElement.style.display = 'block'; 
         canvasText.style.display = 'none'; 
     } else {
+        if (imageWrapper) imageWrapper.style.display = 'none';
         imgElement.style.display = 'none';
         canvasText.innerText = data.canvasText;
         canvasText.style.display = 'block';
@@ -683,7 +686,9 @@ function showS3Finish() {
     document.getElementById('s3-story').innerHTML = "<strong style='color:var(--primary-color); font-size:1.2rem;'>【通關結算】</strong><br>隨著最後一筆烘染完成，整幅《富貴牡丹花鳥圖》躍然紙上。<br>系統顯示：「恭喜你完整掌握了工筆畫的核心技法，從一根線條到繁花似錦，你已具備成為宮廷畫師的資格！」";
     
     const imgElement = document.getElementById('s3-image');
+    const imageWrapper = document.getElementById('s3-image-wrapper');
     imgElement.src = "第三情境-第十關.jpg";
+    if (imageWrapper) imageWrapper.style.display = 'inline-block';
     imgElement.style.display = 'block';
     
     document.getElementById('s3-canvas-text').style.display = 'none';
@@ -741,9 +746,10 @@ function resetGame() {
     switchScreen('screen-home');
 }
 
-// 預先載入圖片快取
+// 預載圖片快取
 function preloadGameImages() {
     const imagesToPreload = [
+        "第二情境-背景圖.jpg",
         ...stage1Data.map(d => d.image).filter(Boolean),
         ...stage3Data.map(d => d.image).filter(Boolean)
     ];
