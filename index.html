@@ -22,7 +22,6 @@
         <img src="封面圖片.png" class="bg-image" alt="丹青試煉封面圖">
         
         <div class="glass-panel small-window">
-            
             <h1 class="ancient-title title-fade-in">丹青試煉<br><span style="font-size: 1.8rem;">工筆畫的時空之旅</span></h1>
             
             <div class="intro-text-container">
@@ -43,11 +42,18 @@
         </div>
     </div>
 
-    <!-- 第一階段 -->
-    <div id="screen-stage1" class="screen">
-        <img id="s1-image" class="bg-image" src="" alt="情境圖">
+    <!-- 第一階段：左圖右題分欄架構 -->
+    <div id="screen-stage1" class="screen stage-split-screen">
+        <!-- 左側：賞圖與細節觀察區 -->
+        <div id="s1-art-container" class="art-viewer-panel">
+            <div class="art-frame">
+                <img id="s1-image" class="art-display-img" src="" alt="情境畫作" onclick="openImageModal(this.src)" title="點擊放大畫作">
+            </div>
+            <div class="art-caption">🔍 點擊畫作可放大檢視細節</div>
+        </div>
         
-        <div class="glass-panel">
+        <!-- 右側：情境敘述與試卷區 -->
+        <div class="glass-panel exam-panel">
             <h2>第一階段：穿越畫境</h2>
             <div id="stage1-content">
                 <div id="s1-story" class="story-text ancient-text"></div>
@@ -129,6 +135,14 @@
             </div>
         </div>
     </div>
+
+    <!-- 畫作放大檢視彈窗 -->
+    <div id="image-modal" class="image-modal" onclick="closeImageModal()">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modal-img" alt="放大檢視">
+        <div class="modal-tip">點擊任意處關閉</div>
+    </div>
+
 </div>
 
 <script src="script.js"></script>

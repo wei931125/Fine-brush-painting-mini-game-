@@ -62,9 +62,91 @@ body {
     z-index: 0;
 }
 
-#s1-image { display: block !important; }
+/* --- 第一階段：左圖右文分欄佈局 --- */
+.stage-split-screen.active {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    gap: 25px;
+    height: 100%;
+    width: 100%;
+}
 
-/* --- 序列動畫腳本設定 --- */
+/* 左側：賞圖容器 */
+.art-viewer-panel {
+    flex: 1.05;
+    height: 86%;
+    background: rgba(247, 241, 229, 0.94);
+    border: 2px solid rgba(139, 115, 85, 0.7);
+    outline: 1px solid rgba(139, 115, 85, 0.35);
+    outline-offset: -6px;
+    border-radius: 6px;
+    padding: 16px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.art-frame {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #e8ded0;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.art-display-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: zoom-in;
+    transition: transform 0.25s ease;
+}
+
+.art-display-img:hover {
+    transform: scale(1.02);
+}
+
+.art-caption {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #6b4d38;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+/* 右側：題庫面板 */
+.exam-panel {
+    flex: 1.15;
+    width: auto !important;
+    max-width: none !important;
+    height: 86% !important;
+    max-height: 86% !important;
+    box-sizing: border-box;
+    padding: 25px 35px !important;
+    background: rgba(250, 246, 238, 0.96) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(139, 115, 85, 0.7);
+    outline: 1px solid rgba(139, 115, 85, 0.35);
+    outline-offset: -6px;
+    border-radius: 6px;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+/* --- 動畫設定 --- */
 @keyframes fadeInUpStay {
     0% { opacity: 0; transform: translateY(15px); }
     100% { opacity: 1; transform: translateY(0); }
@@ -117,33 +199,32 @@ body {
     animation-delay: 8.5s; 
 }
 
-/* --- 面板與文字設定 --- */
+/* --- 宣紙質感面板設定 --- */
 .glass-panel {
     position: relative;
     z-index: 1;
-    background: rgba(244, 235, 217, 0.25); 
-    backdrop-filter: blur(2px); 
-    -webkit-backdrop-filter: blur(2px);
-    /* ✅ 將雙層古風邊框統一加到所有的半透明面板上 */
-    border: 2px solid rgba(139, 115, 85, 0.5);
-    outline: 1px solid rgba(139, 115, 85, 0.3);
+    background: rgba(247, 241, 229, 0.93); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(139, 115, 85, 0.7);
+    outline: 1px solid rgba(139, 115, 85, 0.35);
     outline-offset: -6px; 
-    border-radius: 4px; 
+    border-radius: 6px; 
     padding: 30px 40px;
     width: 75%;
     max-height: 85%;
     overflow-y: auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .small-window {
     width: fit-content;
-    min-width: 480px;
-    max-width: 650px;
-    padding: 35px 55px;
-    background: rgba(255, 255, 255, 0.15); 
-    backdrop-filter: blur(1px); 
-    -webkit-backdrop-filter: blur(1px);
+    min-width: 500px;
+    max-width: 680px;
+    padding: 35px 50px;
+    background: rgba(248, 243, 232, 0.95); 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
     text-align: center;
 }
 
@@ -151,7 +232,6 @@ body {
     font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
     font-size: 2.5rem;
     color: #2c1e16;
-    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(255, 255, 255, 0.8);
     border-bottom: 1px solid rgba(139, 115, 85, 0.6);
     padding-bottom: 15px;
     margin-bottom: 15px; 
@@ -162,10 +242,9 @@ body {
 .ancient-text {
     font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
     color: #2c1e16;
-    font-size: 1.25rem;
-    line-height: 2.2;
-    font-weight: 600;
-    text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.8), 1px 1px 2px rgba(255, 255, 255, 0.5);
+    font-size: 1.22rem;
+    line-height: 2.1;
+    font-weight: 500;
 }
 
 .highlight-title {
@@ -175,7 +254,7 @@ body {
     letter-spacing: 2px;
 }
 
-/* --- 高質感無金邊橢圓按鈕 --- */
+/* 高質感按鈕 */
 .start-btn-premium {
     display: inline-flex;
     justify-content: center;
@@ -191,23 +270,19 @@ body {
     text-indent: 8px; 
     border-radius: 50px; 
     cursor: pointer;
-    box-shadow: 
-        0 4px 15px rgba(0, 0, 0, 0.4), 
-        inset 0 0 10px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.2); 
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     transition: all 0.4s ease;
 }
 
 .start-btn-premium:hover {
     background: linear-gradient(135deg, #A03126, #C84234);
-    box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.5),
-        inset 0 0 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
 }
 
 h1, h2, h3 { text-align: center; font-weight: bold; }
-h2 { font-size: 2.2rem; margin-top: 20px; margin-bottom: 30px; letter-spacing: 4px; color: var(--text-color); }
+h2 { font-size: 2.1rem; margin-top: 15px; margin-bottom: 25px; letter-spacing: 4px; color: var(--text-color); }
 
 #score-board {
     position: absolute;
@@ -218,26 +293,27 @@ h2 { font-size: 2.2rem; margin-top: 20px; margin-bottom: 30px; letter-spacing: 4
     color: var(--primary-color);
     display: none;
     z-index: 100;
-    background: rgba(244, 235, 217, 0.8);
-    padding: 10px 15px;
+    background: rgba(244, 235, 217, 0.9);
+    padding: 10px 18px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.story-text { line-height: 2.2; font-size: 1.15rem; margin-bottom: 25px; text-align: justify; }
+.story-text { line-height: 2.1; font-size: 1.15rem; margin-bottom: 20px; text-align: justify; }
 
+/* 題幹樣式優化 */
 .question-text { 
     font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
-    font-size: 1.25rem; 
-    color: var(--primary-color); 
-    margin-bottom: 25px; 
-    padding: 0; 
-    background: transparent; 
-    border: none; 
+    font-size: 1.28rem; 
+    color: #8B2C22; 
+    margin-bottom: 20px; 
+    padding: 12px 16px; 
+    background: rgba(139, 115, 85, 0.08); 
+    border-left: 4px solid #8B2C22;
     line-height: 1.8; 
     font-weight: bold; 
-    box-shadow: none; 
-    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.8), 0px 0px 8px rgba(139, 115, 85, 0.9);
+    border-radius: 0 4px 4px 0;
 }
 
 #s2-hint {
@@ -249,10 +325,8 @@ h2 { font-size: 2.2rem; margin-top: 20px; margin-bottom: 30px; letter-spacing: 4
     text-align: center;
     font-weight: bold;
     line-height: 1.8;
-    text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.95), 1px 1px 2px rgba(0, 0, 0, 0.3); 
 }
 
-/* 仿舊紙籤回饋底色 */
 #s2-result-msg {
     text-align: center;
     margin: 15px auto 0 auto; 
@@ -274,12 +348,10 @@ h2 { font-size: 2.2rem; margin-top: 20px; margin-bottom: 30px; letter-spacing: 4
 
 #s2-result-msg[style*="color: var(--secondary-color)"] {
     color: #1a4a2e !important; 
-    text-shadow: none !important; 
 }
 
 #s2-result-msg[style*="color: var(--error-color)"] {
     color: #4a4a4a !important; 
-    text-shadow: none !important; 
 }
 
 button:not(.start-btn-premium):not(.dev-btn) {
@@ -287,20 +359,32 @@ button:not(.start-btn-premium):not(.dev-btn) {
     color: white;
     font-family: inherit;
     border: none;
-    padding: 12px 40px;
-    font-size: 1.3rem;
+    padding: 12px 35px;
+    font-size: 1.25rem;
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(178, 58, 46, 0.3); 
     letter-spacing: 2px;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 button:not(.start-btn-premium):not(.dev-btn):hover { background-color: var(--primary-hover); transform: translateY(-2px); }
 .hidden-btn { display: none; }
 
-.option-btn { background-color: var(--btn-dark-green); color: #F4EBD9; border: 1px solid var(--btn-dark-green-hover); padding: 16px 25px; font-size: 1.2rem; border-radius: 4px; margin: 15px 0; width: 100%; text-align: left; box-shadow: 0 4px 10px rgba(53, 78, 65, 0.2); line-height: 1.6; }
+.option-btn { 
+    background-color: var(--btn-dark-green); 
+    color: #F4EBD9; 
+    border: 1px solid var(--btn-dark-green-hover); 
+    padding: 14px 20px; 
+    font-size: 1.15rem; 
+    border-radius: 4px; 
+    margin: 12px 0; 
+    width: 100%; 
+    text-align: left; 
+    box-shadow: 0 3px 8px rgba(53, 78, 65, 0.2); 
+    line-height: 1.6; 
+}
 .option-btn:hover { background-color: var(--btn-dark-green-hover); transform: translateY(-2px); }
 
 .s3-btn { width: 80%; max-width: 300px; margin: 5px 0; background-color: var(--secondary-color) !important; border-radius: 4px !important; padding: 12px 20px !important; }
@@ -319,7 +403,6 @@ button:not(.start-btn-premium):not(.dev-btn):hover { background-color: var(--pri
     font-family: "DFKai-SB", "BiauKai", "Kaiti", serif;
     font-size: 1.2rem;
     letter-spacing: 1px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 .draggable-item:hover { 
     background-color: var(--btn-dark-green); 
@@ -328,7 +411,7 @@ button:not(.start-btn-premium):not(.dev-btn):hover { background-color: var(--pri
 }
 .draggable-item:active { cursor: grabbing; transform: scale(0.95); }
 
-.drop-zone { width: 100%; height: 120px; border: 2px dashed rgba(139, 115, 85, 0.8); border-radius: 8px; display: flex; justify-content: center; align-items: center; background-color: rgba(244, 235, 217, 0.4); color: #4a3322; font-family: "DFKai-SB", "BiauKai", "Kaiti", serif; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 4px rgba(255,255,255,0.8); transition: all 0.3s ease; box-shadow: inset 0 0 15px rgba(139, 115, 85, 0.1); }
+.drop-zone { width: 100%; height: 120px; border: 2px dashed rgba(139, 115, 85, 0.8); border-radius: 8px; display: flex; justify-content: center; align-items: center; background-color: rgba(244, 235, 217, 0.4); color: #4a3322; font-family: "DFKai-SB", "BiauKai", "Kaiti", serif; font-size: 1.3rem; font-weight: bold; transition: all 0.3s ease; box-shadow: inset 0 0 15px rgba(139, 115, 85, 0.1); }
 .drop-zone.dragover { background-color: rgba(244, 235, 217, 0.7); border-color: var(--primary-color); transform: scale(1.02); box-shadow: inset 0 0 20px rgba(139, 115, 85, 0.3); }
 
 .s3-canvas { 
@@ -347,43 +430,63 @@ button:not(.start-btn-premium):not(.dev-btn):hover { background-color: var(--pri
     border-radius: 4px; 
 }
 
-#music-control-container { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 0; background-color: rgba(244, 235, 217, 0.8); padding: 5px; border-radius: 50px; border: 1px solid rgba(139, 115, 85, 0.4); z-index: 100; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+#music-control-container { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 0; background-color: rgba(244, 235, 217, 0.85); padding: 5px; border-radius: 50px; border: 1px solid rgba(139, 115, 85, 0.4); z-index: 100; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 #music-control-container:hover { background-color: rgba(244, 235, 217, 0.95); padding: 5px 15px 5px 5px; gap: 10px; }
 #music-toggle { font-size: 1.5rem; cursor: pointer; background: none; border: none; padding: 5px; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; color: var(--primary-color); margin-top: 0; flex-shrink: 0; transition: background-color 0.3s; }
 #music-toggle:hover { background-color: rgba(178, 58, 46, 0.1); }
 #volume-slider { width: 0; opacity: 0; cursor: pointer; accent-color: var(--primary-color); transition: all 0.4s; margin: 0; }
 #music-control-container:hover #volume-slider { width: 80px; opacity: 1; }
 
-#video-guide-btn { position: absolute; top: 85px; left: 20px; background-color: rgba(244, 235, 217, 0.8); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 50px; padding: 8px 16px; color: var(--text-color); font-size: 1rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 100; transition: all 0.3s ease; }
+#video-guide-btn { position: absolute; top: 85px; left: 20px; background-color: rgba(244, 235, 217, 0.85); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 50px; padding: 8px 16px; color: var(--text-color); font-size: 1rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 100; transition: all 0.3s ease; }
 #video-guide-btn:hover { background-color: rgba(244, 235, 217, 1); color: var(--primary-color); transform: translateY(-2px); }
 
-/* 開發者測試捷徑樣式 */
-#dev-shortcuts {
+/* --- 彈窗燈箱（Lightbox）--- */
+.image-modal {
+    display: none;
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(30, 30, 30, 0.85);
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: 1px solid #555;
     z-index: 9999;
-    display: flex;
-    gap: 8px;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(20, 15, 10, 0.85);
+    backdrop-filter: blur(5px);
+    justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    flex-direction: column;
+    cursor: zoom-out;
 }
-.dev-btn {
-    background-color: #444;
-    color: white;
-    border: 1px solid #666;
-    padding: 6px 12px;
+
+.modal-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    border: 4px solid #F4EBD9;
     border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.95rem;
-    transition: background-color 0.2s;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    object-fit: contain;
+    animation: zoomIn 0.25s ease;
 }
-.dev-btn:hover {
-    background-color: var(--primary-color);
-    border-color: var(--primary-hover);
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #F4EBD9;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal-close:hover { color: var(--primary-color); }
+
+.modal-tip {
+    color: #e0d5c1;
+    margin-top: 12px;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
 }

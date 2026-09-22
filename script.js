@@ -64,6 +64,20 @@ function toggleMusic() {
     }
 }
 
+// --- 彈窗放大檢視邏輯 ---
+function openImageModal(src) {
+    if (!src) return;
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    modal.style.display = 'flex';
+    modalImg.src = src;
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('image-modal');
+    if (modal) modal.style.display = 'none';
+}
+
 // --- 資料結構區 ---
 const stage1Data = [
     {
@@ -75,7 +89,8 @@ const stage1Data = [
             { text: "承載倫理教化功能，用以教導世人忠孝節義。", isCorrect: true },
             { text: "為了客觀紀錄歷史事件，讓後代帝王有史可考。", isCorrect: false },
             { text: "純粹展現畫師的個人情感與對世俗生活的批判。", isCorrect: false }
-        ]
+        ],
+        explanation: "漢代繪畫重視倫理教化功能，藉由描繪忠臣烈士來教育世人遵守儒家忠孝節義。"
     },
     {
         image: "第一情境-第二關.png", 
@@ -308,11 +323,13 @@ function loadStage1Question() {
     const data = stage1Data[currentQuestionIndex];
     
     const imgElement = document.getElementById('s1-image');
+    const artContainer = document.getElementById('s1-art-container');
+    
     if (data.image) {
         imgElement.src = data.image;
-        imgElement.style.display = 'block'; 
+        if (artContainer) artContainer.style.display = 'flex';
     } else {
-        imgElement.style.display = 'none'; 
+        if (artContainer) artContainer.style.display = 'none';
     }
 
     document.getElementById('s1-story').innerText = data.story;
@@ -335,9 +352,9 @@ function loadStage1Question() {
         optionsContainer.appendChild(btn);
     });
 
-    const stage1Panel = document.querySelector('#screen-stage1 .glass-panel');
-    if (stage1Panel) {
-        stage1Panel.scrollTop = 0;
+    const examPanel = document.querySelector('#screen-stage1 .exam-panel');
+    if (examPanel) {
+        examPanel.scrollTop = 0;
     }
 }
 
@@ -358,7 +375,10 @@ function handleStage1Answer(isCorrect) {
 }
 
 function checkStage1Result() {
-    document.getElementById('s1-image').style.display = 'none'; 
+    // 結算時隱藏左側畫框，讓解析卷完整呈現
+    const artContainer = document.getElementById('s1-art-container');
+    if (artContainer) artContainer.style.display = 'none';
+
     document.getElementById('s1-story').innerText = "第一階段測驗結束！";
     document.getElementById('s1-question').innerText = `你的得分為：${stage1Score} 分 (滿分40分)`;
     
@@ -368,11 +388,11 @@ function checkStage1Result() {
     const reviewDiv = document.createElement('div');
     reviewDiv.style.textAlign = 'left';
     reviewDiv.style.marginTop = '20px';
-    reviewDiv.style.padding = '15px';
-    reviewDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'; 
+    reviewDiv.style.padding = '18px';
+    reviewDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'; 
     reviewDiv.style.border = '1px solid var(--border-color)';
     reviewDiv.style.borderRadius = '8px';
-    reviewDiv.style.maxHeight = '300px';
+    reviewDiv.style.maxHeight = '320px';
     reviewDiv.style.overflowY = 'auto'; 
 
     let reviewHTML = '<h3 style="margin-top:0; color: var(--primary-color);">【錯題解析】</h3>';
@@ -607,7 +627,6 @@ function loadS3Step(stepNum) {
         controls.appendChild(btn);
     });
 
-    // ✅ 新增：在第三階段切換步驟時，確保畫面自動捲動至最上方
     const stage3Panel = document.querySelector('#screen-stage3 .glass-panel');
     if (stage3Panel) {
         stage3Panel.scrollTop = 0;
@@ -722,7 +741,7 @@ function resetGame() {
     switchScreen('screen-home');
 }
 
-// 收集所有關卡需要動態載入的圖片路徑
+// 預先載入圖片快取
 function preloadGameImages() {
     const imagesToPreload = [
         ...stage1Data.map(d => d.image).filter(Boolean),
@@ -731,9 +750,8 @@ function preloadGameImages() {
 
     imagesToPreload.forEach(src => {
         const img = new Image();
-        img.src = src; // 觸發瀏覽器背景快取下載
+        img.src = src;
     });
 }
 
-// 在網頁一打開時立即執行預載
 window.addEventListener('load', preloadGameImages);
